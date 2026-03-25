@@ -1,0 +1,286 @@
+@page "/"
+@inject IJSRuntime JS
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Special+Elite&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+theme:{
+extend:{
+fontFamily:{
+'gothic':['"Cinzel Decorative"','serif'],
+'grunge':['"Special Elite"','monospace']
+},
+colors:{
+'void':'#050505',
+'ash':'#d1d5db'
+}
+}
+}
+}
+</script>
+
+<style>
+
+body{
+background-color:#000;
+background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAF9JREFUGOMldIxBEYAwDAnFwICso1mH8NSPqWCEY4c45l1iKo6v52Gk0+1K7U41A8wM60O1M8P6UL1f4f74u+t/C+6Gj9e/65Wq9s39qWrfr3C/qj4u1f/W7k41A3y3E344GAB7AAAAAElFTkSuQmCC');
+color:#d1d5db;
+}
+
+@@keyframes squish-anim{
+0%{transform:scale(1);}
+40%{transform:scale(.96,.92);}
+100%{transform:scale(1);}
+}
+
+.squish-active{animation:squish-anim .25s ease-in-out forwards;}
+
+.ornate-border-bottom{
+border-bottom:2px solid transparent;
+border-image:linear-gradient(to right,transparent,#fff,transparent);
+border-image-slice:1;
+}
+
+.scratchy-text{
+text-shadow:0 0 2px rgba(255,255,255,.5);
+letter-spacing:.05em;
+}
+
+.carousel-track{transition:transform .5s cubic-bezier(.4,0,.2,1);}
+
+#mobile-menu{transform:translateX(100%);transition:transform .4s ease-in-out;}
+#mobile-menu.active{transform:translateX(0);}
+
+#lightbox{
+opacity:0;
+pointer-events:none;
+transition:opacity .4s ease;
+}
+
+#lightbox.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.tos-scroll::-webkit-scrollbar{width:4px;}
+.tos-scroll::-webkit-scrollbar-track{background:#111;}
+.tos-scroll::-webkit-scrollbar-thumb{background:#fff;}
+
+</style>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12 cursor-zoom-out">
+        <button class="absolute top-6 right-6 text-white text-4xl hover:rotate-90 transition-transform duration-300">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Full view" class="max-w-full max-h-full object-contain border border-white/20 shadow-2xl transition-all duration-500 scale-90 active:scale-100">
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 bg-void/90 backdrop-blur-md border-b border-zinc-800/50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-gothic text-white tracking-widest scratchy-text">
+                <i class="fa-solid fa-cross text-sm align-middle mr-2"></i>Benjamin Joshua Tecson
+            </div>
+            <div class="hidden md:flex space-x-8 font-gothic text-xs tracking-wider uppercase">
+                <a href="#home" class="hover:text-white transition-all underline-offset-8 hover:underline">Home</a>
+                <a href="#about" class="hover:text-white transition-all underline-offset-8 hover:underline">About</a>
+                <a href="#works" class="hover:text-white transition-all underline-offset-8 hover:underline">Works</a>
+                <a href="#commission" class="text-white border border-white px-4 py-1 hover:bg-white hover:text-black transition-all">Commission Me</a>
+            </div>
+            <button id="menu-open" class="md:hidden text-white text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+    </div>
+</nav>
+
+<div id="mobile-menu" class="fixed inset-0 z-[60] bg-void flex flex-col items-center justify-center space-y-8">
+    <button id="menu-close" class="absolute top-6 right-6 text-white text-3xl"><i class="fa-solid fa-xmark"></i></button>
+    <a href="#home" class="mobile-link text-2xl font-gothic text-white uppercase">Home</a>
+    <a href="#about" class="mobile-link text-2xl font-gothic text-white uppercase">About</a>
+    <a href="#works" class="mobile-link text-2xl font-gothic text-white uppercase">Works</a>
+    <a href="#commission" class="mobile-link text-xl border border-white px-6 py-2 text-white font-gothic uppercase">Commission</a>
+</div>
+
+
+<!-- HERO -->
+<section id="home" class="min-h-screen flex flex-col items-center justify-center px-4 pt-20 ornate-border-bottom">
+
+<div class="text-center">
+
+<h1 class="text-4xl md:text-7xl font-gothic text-white mb-6 uppercase scratchy-text">
+Maintaining Mental<br>Insanity
+</h1>
+
+<p class="text-lg md:text-xl max-w-2xl mx-auto mb-12 text-ash/80">
+Code woven from my delusions
+</p>
+
+<a href="#about" class="px-10 py-4 border-2 border-white font-gothic uppercase">
+Enter the Void
+</a>
+
+</div>
+
+</section>
+
+
+<section class="py-20 bg-void relative ornate-border-bottom overflow-hidden">
+    <div class="container mx-auto px-4 md:px-6 text-center">
+        <h2 class="text-2xl md:text-3xl font-gothic text-white mb-12 uppercase tracking-widest">Featured Manifestations</h2>
+        <div class="relative group max-w-5xl mx-auto border border-zinc-800 p-1 md:p-2">
+            <div class="overflow-hidden relative h-[300px] md:h-[500px] bg-black">
+                <div id="carouselTrack" class="carousel-track flex h-full">
+                    <div class="w-full h-full flex-shrink-0 relative cursor-zoom-in interactive-work">
+                        <img src="images/ahreumart.png" alt="P1" class="w-full h-full object-cover grayscale contrast-125 opacity-60">
+                    </div>
+                    <div class="w-full h-full flex-shrink-0 relative cursor-zoom-in interactive-work">
+                        <img src="images/sigil1.jpg" alt="P2" class="w-full h-full object-cover grayscale contrast-125 opacity-60">
+                    </div>
+                </div>
+            </div>
+            <button id="prevBtn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white border border-white w-10 h-10 rounded-full z-10 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="nextBtn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white border border-white w-10 h-10 rounded-full z-10 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </div>
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about" class="py-24 bg-void ornate-border-bottom">
+
+<div class="container mx-auto px-6 flex flex-col md:flex-row gap-12 items-center">
+
+<img src="images/profile.jpg" height = "300px" width = "400px"
+class="grayscale border border-zinc-800 p-2">
+
+<div>
+
+<h2 class="text-3xl font-gothic text-white mb-6 uppercase scratchy-text">
+The Architect
+</h2>
+
+<p class="text-ash/80 mb-6">
+Hello, I am Benjamin Joshua Tecson, a BSIT student at Cebu Technological University. I have a strong interest in Alternative Culture, and I am passionate about developing my knowledge and experience in this field. This portfolio showcases my projects, skills, and academic work that reflect my growth and dedication.
+</p>
+
+<p class="text-ash/80 italic">
+"Weaving code straight from my delusions"
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WORKS -->
+
+<section id="works" class="py-20 bg-black ornate-border-bottom">
+
+<div class="container mx-auto px-6">
+
+<h2 class="text-3xl font-gothic text-white text-center mb-16 uppercase">
+My Work
+</h2>
+
+<div class="grid md:grid-cols-3 gap-8">
+
+<div class="interactive-work border border-zinc-800 bg-void p-1 cursor-zoom-in">
+
+<img src="images/ahreumart.png"
+class="w-full h-64 object-cover grayscale">
+
+<div class="p-4 text-center font-gothic text-xs uppercase">
+Ahreum Art Portfolio
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- COMMISSION -->
+
+<section id="commission" class="py-20 bg-black relative">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-2xl font-gothic text-white mb-8 tracking-widest uppercase">Summon the Architect</h2>
+                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                        <input type="hidden" name="access_key" value="62055fc5-1751-494e-b383-da4e9696fcef">
+                        <input type="text" name="name" required class="w-full bg-void border border-zinc-800 px-4 py-3 outline-none focus:border-white transition-all font-grunge text-white" placeholder="Name">
+                        <input type="email" name="email" required class="w-full bg-void border border-zinc-800 px-4 py-3 outline-none focus:border-white transition-all font-grunge text-white" placeholder="Email">
+                        <textarea name="message" rows="4" required class="w-full bg-void border border-zinc-800 px-4 py-3 outline-none focus:border-white transition-all font-grunge text-white resize-none" placeholder="Details..."></textarea>
+                        <button type="submit" class="w-full py-4 bg-white text-black font-gothic font-bold uppercase tracking-widest hover:bg-zinc-300 transition-colors">Submit Pact</button>
+                    </form>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-gothic text-white mb-8 tracking-widest uppercase">Terms of the Pact</h2>
+                    <div class="h-[340px] overflow-y-auto tos-scroll border border-zinc-800 bg-void/50 p-6 text-xs text-ash/60 leading-relaxed font-grunge">
+                        <h3 class="text-white mb-2 uppercase tracking-widest">I. General Terms</h3>
+                        <p class="mb-4">By initiating a summon, you agree to provide clear manifestations of your needs. All code provided is property of the void until full tribute is paid.</p>
+                        
+                        <h3 class="text-white mb-2 uppercase tracking-widest">II. Revisions</h3>
+                        <p class="mb-4">Two major revisions are permitted. Further alterations require additional offerings. Major structural changes after the initial conjuring are not permitted.</p>
+
+                        <h3 class="text-white mb-2 uppercase tracking-widest">III. Tribute (Payments)</h3>
+                        <p class="mb-4">A 50% deposit is required before work begins. Payments are non-refundable once the digital ritual has commenced. Taxes of the realm apply.</p>
+
+                        <h3 class="text-white mb-2 uppercase tracking-widest">IV. Forbidden Content</h3>
+                        <p class="mb-4">I will not conjure artifacts that promote hate, harm, or digital illness. The Architect reserves the right to refuse any pact.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- FOOTER -->
+
+<footer class="py-12 bg-void border-t border-zinc-900 text-center">
+
+<div class="flex justify-center space-x-6 mb-8">
+
+<a href="https://www.facebook.com/BenjaminJoshuaTecson" target="_blank">
+  <i class="fa-brands fa-facebook"></i>
+</a>
+
+<a href="https://www.instagram.com/2x2t.benjamin" target="_blank">
+  <i class="fa-brands fa-instagram"></i>
+</a>
+
+</div>
+
+<p class="font-gothic text-xs text-zinc-600 uppercase">
+© 2026 Benjamin Joshua Tecson
+</p>
+
+</footer>
+
+
+@code {
+
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+if(firstRender)
+{
+await JS.InvokeVoidAsync("initSiteScripts");
+}
+}
+
+}
